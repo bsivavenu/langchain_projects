@@ -24,9 +24,12 @@ hf_api_key = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 openai_api_key = os.getenv("OPENAI_API_KEY")
 gemini_api_key = os.getenv("GOOGLE_API_KEY")
 
-os.environ["HUGGINGFACEHUB_API_TOKEN"] = hf_api_key
-os.environ["OPENAI_API_KEY"] = openai_api_key
-os.environ["GOOGLE_API_KEY"] = gemini_api_key   
+if hf_api_key is not None:
+    os.environ["HUGGINGFACEHUB_API_TOKEN"] = hf_api_key
+if openai_api_key is not None:
+    os.environ["OPENAI_API_KEY"] = openai_api_key
+if gemini_api_key is not None:
+    os.environ["GOOGLE_API_KEY"] = gemini_api_key   
 
 
 @st.cache_resource
@@ -54,8 +57,10 @@ def get_llm(provider: str):
 
 
 
-def load_answer(question):
-    llm = get_llm()
+def load_answer(question, provider):
+    llm = get_llm(provider)
+    if llm is None:
+        return "Error: No valid language model selected."
     response = llm.invoke(question)
     return response
 
