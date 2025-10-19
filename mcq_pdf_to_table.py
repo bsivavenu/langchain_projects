@@ -14,6 +14,8 @@ def extract_text_from_pdf(file_path):
 
 import re
 
+file_path = "../../Ancient_History_Previous_Year_Questions_UPSC.pdf"
+
 pattern = re.compile(
     r"Q\d+\.([\s\S]*?)(?:\([a-dA-D]\)[\s\S]*?Correct answer:\s*([a-dA-D]))",
     re.MULTILINE
@@ -21,7 +23,7 @@ pattern = re.compile(
 
 matches = re.findall(
     r"Q\d+\.\s*(.*?)\n\s*\(a\)\s*(.*?)\n\s*\(b\)\s*(.*?)\n\s*\(c\)\s*(.*?)\n\s*\(d\)\s*(.*?)\n\s*Correct answer:\s*([a-dA-D])",
-    extract_text_from_pdf("../../Economy_questions_c64ad6834a.pdf"),
+    extract_text_from_pdf(file_path),
     re.DOTALL
 )
 
@@ -33,7 +35,7 @@ for q_text, opt_a, opt_b, opt_c, opt_d, correct in matches:
         "options": {"A": opt_a.strip(), "B": opt_b.strip(), "C": opt_c.strip(), "D": opt_d.strip()},
         "correct_answer": correct.upper(),
         "explanation": None,
-        "source": "polity_prelims_questions_a5ffe5d551.pdf",
+        "source": file_path,
         "topic": "Polity PYQ",
         "difficulty": 3
     })
