@@ -1,0 +1,41 @@
+[project]
+name = "python-files"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "docx2txt>=0.9",
+    "faiss-cpu>=1.13.2",
+    "ipykernel>=7.1.0",
+    "jq>=1.11.0",
+    "langchain>=1.2.6",
+    "langchain-chroma>=1.1.0",
+    "langchain-classic>=1.0.1",
+    "langchain-community>=0.4.1",
+    "langchain-experimental>=0.4.1",
+    "langchain-huggingface>=1.2.0",
+    "langchain-openai>=1.1.7",
+    "langchain-pinecone>=0.2.13",
+    "langchain-text-splitters>=1.1.0",
+    "langchain-unstructured>=1.0.1",
+    "matplotlib>=3.10.8",
+    "notebook>=7.5.1",
+    "numpy<2.0.0",
+    "openai>=2.15.0",
+    "openpyxl>=3.1.5",
+    "pandas>=2.3.3",
+    "pinecone<8.0.0",
+    "pypdf>=6.6.0",
+    "python-dotenv>=1.2.1",
+    "rank-bm25>=0.2.2",
+    "scikit-learn>=1.8.0",
+    "sentence-transformers>=5.2.0",
+    "streamlit>=1.53.0",
+    "tiktoken>=0.12.0",
+]
+
+[tool.uv.workspace]
+members = [
+    "rag_krish_naik",
+]
