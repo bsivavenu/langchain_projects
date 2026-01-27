@@ -1,10 +1,10 @@
 from langchain_pinecone import PineconeVectorStore
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain.schema import Document
+from langchain_core.documents import Document
 from pinecone import Pinecone
 from pypdf import PdfReader
 from langchain_openai import OpenAI
-from langchain.chains.summarize import load_summarize_chain
+from langchain_classic.chains import load_summarize_chain
 from langchain_huggingface import HuggingFaceEndpoint
 
 import time

@@ -3,16 +3,17 @@ import asyncio
 import pinecone
 
 # Use the canonical LangChain import paths
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.vectorstores import Pinecone as PineconeVectorStore
-from langchain.document_loaders import SitemapLoader
+from langchain_classic.text_splitter import RecursiveCharacterTextSplitter
+from langchain_classic.embeddings import HuggingFaceEmbeddings
+from langchain_classic.vectorstores import Pinecone as PineconeVectorStore
+from langchain_classic.document_loaders import SitemapLoader
 from langchain_community.vectorstores import Pinecone
 import constants
 from pinecone import Pinecone, ServerlessSpec
 from langchain_pinecone import PineconeVectorStore
 
-
+from dotenv import load_dotenv
+load_dotenv()
 from pinecone import Pinecone
 pc = Pinecone(os.environ.get("PINECONE_API_KEY", ""))
 
@@ -20,32 +21,50 @@ pc = Pinecone(os.environ.get("PINECONE_API_KEY", ""))
 # https://python.langchain.com/docs/integrations/document_loaders/sitemap/
 # here we are passing a limit value of 5 so that we dont end up getting every link as its just a demo project
 def get_website_data(sitemap_url, limit=5):
+    """
+    Load data from a website sitemap and return top `limit` documents.
+    """
+    try:
+        # Some LangChain loaders are synchronous; ensure a fresh event loop
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
 
-    # SitemapLoader is synchronous in many LangChain versions; keep a new event loop
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    loader = SitemapLoader(sitemap_url)
+        loader = SitemapLoader(sitemap_url, recursive=True)
+        docs = loader.load()  # returns a list of Document objects
 
-    docs = loader.load()
-    return docs[:limit]
+        return docs[:limit]
+    except Exception as e:
+        print(f"Error loading sitemap: {e}")
+        return []
 
 #Function to split data into smaller chunks
 def split_data(docs):
+    """
+    Split documents into smaller chunks for embeddings / vector storage.
+    """
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
         chunk_overlap=200,
-        length_function=len,
+        length_function=len
     )
-
     docs_chunks = text_splitter.split_documents(docs)
     return docs_chunks
 
 #Function to create embeddings instance
 def create_embeddings():
-    # Create HuggingFace embeddings. Ensure HUGGINGFACEHUB_API_TOKEN is set in env.
-    embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-    return embeddings
+    """
+    Create embeddings using HuggingFace model.
+    Make sure HUGGINGFACEHUB_API_TOKEN is set in your environment.
+    """
+    hf_token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+    if not hf_token:
+        raise ValueError("Set HUGGINGFACEHUB_API_TOKEN in your env")
 
+    embeddings = HuggingFaceEmbeddings(
+        model_name="all-MiniLM-L6-v2",
+        model_kwargs={"device": "cpu"}  # change to "cuda" if GPU available
+    )
+    return embeddings
 
 
 from pinecone import Pinecone, ServerlessSpec

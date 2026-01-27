@@ -24,28 +24,28 @@ def main():
     st.title("Please upload your files...📁 ")
 
     # Upload the pdf file...
-    pdf = st.file_uploader("Only PDF files allowed", type=["pdf"])
+    pdf = st.file_uploader("Only PDF files allowed", type=["pdf"], accept_multiple_files=True)
 
     # Extract the whole text from the uploaded pdf file
     if pdf is not None:
-        with st.spinner('Wait for it...'):
-            text=read_pdf_data(pdf)
-            st.write("👉Reading PDF done")
+        for single_pdf in pdf:
+            with st.spinner(f'Processing {single_pdf.name}...'):
+                text = read_pdf_data(single_pdf)
+                st.write(f"👉 Reading {single_pdf.name} done")
 
-            # Create chunks
-            docs_chunks=split_data(text)
-            #st.write(docs_chunks)
-            st.write("👉Splitting data into chunks done")
+                docs_chunks = split_data(text)
+                st.write("👉 Splitting data into chunks done")
 
-            # Create the embeddings
-            embeddings=create_embeddings_load_data()
-            st.write("👉Creating embeddings instance done")
+                embeddings = create_embeddings_load_data()
+                st.write("👉 Creating embeddings instance done")
 
-            # Build the vector store (Push the PDF data embeddings)
-            #Recent changes by langchain team, expects ""PINECONE_API_KEY" environment variable for Pinecone usage! So we are creating it here
-            # import os
-            # os.environ["PINECONE_API_KEY"] = "csk_4KxZJN_4nkjn;hukjkn;jnkijUrAAeUJYySDwg4rLh6UsgXCeKs92au1mFJRn"
-            push_to_pinecone(pinecone_key,  index_name = "tickets",embeddings=embeddings, docs = docs_chunks)
+                push_to_pinecone(
+                    pinecone_key,
+                    index_name="tickets",
+                    embeddings=embeddings,
+                    docs=docs_chunks
+                )
+
 
         st.success("Successfully pushed the embeddings to Pinecone")
 

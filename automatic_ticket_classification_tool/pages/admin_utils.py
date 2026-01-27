@@ -1,5 +1,5 @@
 from pypdf import PdfReader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_classic.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_openai import OpenAI

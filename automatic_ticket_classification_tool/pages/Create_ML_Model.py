@@ -106,5 +106,5 @@ with tabs[3]:
     if button:
 
         with st.spinner('Wait for it...'):
-             joblib.dump(st.session_state['svm_classifier'], 'modelsvm.pk1')
+             joblib.dump(st.session_state['svm_classifier'], 'modelsvm.pkl')
         st.success('Done!')

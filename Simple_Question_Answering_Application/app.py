@@ -18,8 +18,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_classic.memory import ConversationBufferMemory
 
-from langchain.chains import ConversationChain
-from langchain_community.llms import OpenAI
+from langchain_classic.chains import ConversationChain
 
 load_dotenv()
 

@@ -6,21 +6,33 @@ st.title('Departments')
 tab_titles = ['HR Support', 'IT Support', 'Transportation Support']
 tabs = st.tabs(tab_titles)
  
+import streamlit as st
+
+# ---- Session state initialization ----
+if 'HR_tickets' not in st.session_state:
+    st.session_state['HR_tickets'] = []
+
+if 'IT_tickets' not in st.session_state:
+    st.session_state['IT_tickets'] = []
+
+if 'Transport_tickets' not in st.session_state:
+    st.session_state['Transport_tickets'] = []
+
+
 # Add content to each tab...
 with tabs[0]:
     st.header('HR Support tickets')
-    for ticket in st.session_state['HR_tickets']:
-        st.write(str(st.session_state['HR_tickets'].index(ticket)+1)+" : "+ticket)
-    
- 
+    for i, ticket in enumerate(st.session_state['HR_tickets'], start=1):
+        st.write(f"{i} : {ticket}")
+
 with tabs[1]:
     st.header('IT Support tickets')
-    for ticket in st.session_state['IT_tickets']:
-        st.write(str(st.session_state['IT_tickets'].index(ticket)+1)+" : "+ticket)
- 
+    for i, ticket in enumerate(st.session_state['IT_tickets'], start=1):
+        st.write(f"{i} : {ticket}")
+
 with tabs[2]:
     st.header('Transportation Support tickets')
-    for ticket in st.session_state['Transport_tickets']:
-        st.write(str(st.session_state['Transport_tickets'].index(ticket)+1)+" : "+ticket)
+    for i, ticket in enumerate(st.session_state['Transport_tickets'], start=1):
+        st.write(f"{i} : {ticket}")
     
  

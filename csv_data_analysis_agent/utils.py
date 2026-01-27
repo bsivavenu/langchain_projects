@@ -3,6 +3,9 @@ from langchain_openai import OpenAI
 import pandas as pd
 import streamlit as st
 
+from dotenv import load_dotenv
+load_dotenv()
+
 def query_agent(data, query):
     messages = []
 
@@ -50,9 +53,10 @@ def query_agent(data, query):
 
     # 6. Invoke query safely
     try:
-        answer = agent.invoke(query)
+        response = agent.invoke(query)
+        answer = response.get("output", response)
     except Exception as e:
         answer = f"Error processing query: {e}"
 
     # 7. Return combined messages + answer
-    return "\n".join(messages) + "\n\n**Query Result:**\n" + str(answer)
+    return "\n".join(messages) + "\n\n" + answer

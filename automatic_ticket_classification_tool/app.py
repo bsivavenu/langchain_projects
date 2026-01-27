@@ -1,6 +1,8 @@
+import os
 from dotenv import load_dotenv
 import streamlit as st
 from user_utils import *
+from pinecone import Pinecone
 
 #Creating session variables
 if 'HR_tickets' not in st.session_state:
@@ -15,7 +17,7 @@ dotenv_path = os.path.join(os.path.dirname(__file__), os.pardir, '.env')
 load_dotenv(dotenv_path)
 
 
-from pinecone import Pinecone
+
 
 pinecone = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 

@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 
 st.title('🤖 AI Assistance For Website') 
 
-dotenv_path = os.path.join(os.path.dirname(__file__), os.pardir, '.env')
-load_dotenv(dotenv_path)
+
+load_dotenv()
 
 
 # Read API keys from environment (preferred). You can set these in your .env file:
@@ -43,7 +43,11 @@ if load_button:
 
         # Push to Pinecone
         # push_to_pinecone(pinecone_key, constants.PINECONE_ENVIRONMENT, constants.PINECONE_INDEX, embeddings, chunks_data)
-        push_to_pinecone(pinecone_key, constants.PINECONE_INDEX, embeddings, chunks_data)
+        if not chunks_data:
+
+            st.warning("No data to push to Pinecone.")
+        else:
+            push_to_pinecone(pinecone_key, constants.PINECONE_INDEX, embeddings, chunks_data)
 
         st.success("Data pushed to Pinecone successfully!")
     else:
@@ -51,7 +55,7 @@ if load_button:
 
 #Captures User Inputs
 prompt = st.text_input('How can I help you my friend ❓',key="prompt")  # The box for the text prompt
-document_count = st.slider('No.Of links to return 🔗 - (0 LOW || 5 HIGH)', 0, 5, 2,step=1)
+document_count = st.slider('No.Of links to return 🔗 - (0 LOW || 5 HIGH)', 1, 5, 2,step=1)
 
 submit = st.button("Search") 
 
