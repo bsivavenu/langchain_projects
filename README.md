@@ -1,5 +1,10 @@
 # LangChain Projects
 
+[![Python Version](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub Stars](https://img.shields.io/github/stars/bsivavenu/langchain_projects?style=social)](https://github.com/bsivavenu/langchain_projects)
+[![Last Commit](https://img.shields.io/github/last-commit/bsivavenu/langchain_projects)](https://github.com/bsivavenu/langchain_projects)
+
 A comprehensive collection of AI/LLM projects built with LangChain, demonstrating various use cases and integrations with OpenAI, Google GenAI, and other platforms.
 
 ## 📚 Project Overview
