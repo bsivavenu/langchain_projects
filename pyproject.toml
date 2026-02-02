@@ -1,9 +1,11 @@
 [project]
-name = "python-files"
+name = "langchain-projects"
 version = "0.1.0"
-description = "Add your description here"
+description = "Comprehensive collection of AI/LLM projects demonstrating LangChain capabilities with multiple integrations including OpenAI, Google GenAI, Pinecone, and more."
 readme = "README.md"
+authors = [{name = "Siva Venu", email = "bsivavenu@gmail.com"}]
 requires-python = ">=3.11,<3.13"
+keywords = ["langchain", "llm", "ai", "openai", "google-genai", "rag", "retrieval-augmented-generation", "streamlit"]
 dependencies = [
     "beautifulsoup4>=4.14.3",
     "ctransformers>=0.2.27",
